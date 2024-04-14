@@ -1,28 +1,41 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useReducer } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView,DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import Home from './components/Home/Home';
-import Login from './components/Login/Login';
 import { useEffect, useState } from 'react';
 import Apis, { endpoints } from './Apis';
 import Lesson from './components/Lesson/Lesson';
 import LessonDetail from './components/Lesson/LessonDetail';
+import MyContext from './MyContext'
+import MyUserReducer from './MyUserReducer'
+import Login from './components/User/Login';
+import Logout from './components/User/Logout';
+import Register from './components/User/Register';
 
 
 const Drawer = createDrawerNavigator();
 
 export default App = ()=>{
-  return <NavigationContainer>
-    <Drawer.Navigator drawerContent={MyDrawerContent}>
+  const [user, dispatch] = useReducer(MyUserReducer, null);
+
+  return <MyContext.Provider value={[user, dispatch]}>
+    <NavigationContainer>
+    <Drawer.Navigator drawerContent={MyDrawerContent} screenOptions={{headerRight: Logout}}>
       <Drawer.Screen name='Home' component={Home} options={{title: "Trang chủ", headerStyle: {backgroundColor: "lightblue"}}}></Drawer.Screen>
-      <Drawer.Screen name='Login' component={Login} options={{title: "Đăng nhập"}}/>
+      {user===null?<>
+        <Drawer.Screen name='Login' component={Login} options={{title: "Đăng nhập"}}/>
+        <Drawer.Screen name='Register' component={Register} options={{title: "Đăng ký"}}/>
+      </>:<>
+        <Drawer.Screen name={user.username} component={Home}/>
+      </>}
       <Drawer.Screen name='Lesson' component={Lesson} options = {{title: "Danh sách bài học", drawerItemStyle: {display: "none"}}}/>
       <Drawer.Screen name='LessonDetail' component={LessonDetail} options ={{title: "Chi tiết bài học", drawerItemStyle: {display: "none"}}}/>
     </Drawer.Navigator>
   </NavigationContainer>
+  </MyContext.Provider>
 }
 
 const MyDrawerContent = (props) => {

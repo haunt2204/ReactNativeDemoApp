@@ -4,7 +4,7 @@ export default MyStyle = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        // alignItems: "center",
+        alignItems: "center",
         backgroundColor: "lightgray",
     },
     subject: {
@@ -16,7 +16,7 @@ export default MyStyle = StyleSheet.create({
         flexDirection: "row"
     },
     title:{
-        fontSize: 12,
+        fontSize: 18,
         fontWeight: "bold",
         color: "blue",
         marginLeft: 5

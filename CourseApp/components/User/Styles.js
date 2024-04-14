@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native";
 
-export default styles = StyleSheet.create({
+export default Styles = StyleSheet.create({
     input: {
-        backgroundColor: 'lightgray',
-        width: 250,
-        borderWidth: 0.2
+        borderWidth: 0.2,
+        backgroundColor: 'white',
+        padding: 10,
+        width: '100%',
+        marginBottom: 5
     },
     button:{
         backgroundColor: 'darkblue',
